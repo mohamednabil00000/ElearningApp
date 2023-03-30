@@ -1,5 +1,5 @@
 {
-  "name": "Elearnio",
+  "name": "elearnio",
   "private": true,
   "dependencies": {
     "@rails/actioncable": "^6.0.0",
