@@ -1,24 +1,71 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+It is a sample e-learning application for creating learning paths and courses.
 
-Things you may want to cover:
+## Features
 
-* Ruby version
+* Rails 6
+* Ruby 2.5
+* Dockerfile and Docker Compose configuration
+* Heroku configration using foreman
+* PostgreSQL database
+* Rspec & Factorybot
+* GitHub Actions for
+  * tests
+  * security checks
+  * Rubocop for linting(upcoming)
+* I18n
+* Swagger(upcoming)
 
-* System dependencies
 
-* Configuration
+## Requirements
 
-* Database creation
+Please ensure you have docker & docker-compose
 
-* Database initialization
+https://www.theserverside.com/blog/Coffee-Talk-Java-News-Stories-and-Opinions/How-to-install-Docker-and-docker-compose-on-Ubuntu
 
-* How to run the test suite
+https://dockerlabs.collabnix.com/intermediate/workshop/DockerCompose/How_to_Install_Docker_Compose.html
 
-* Services (job queues, cache servers, search engines, etc.)
+Check your docker compose version with:
+```
+% docker compose version
+Docker Compose version v1.27.4
+```
 
-* Deployment instructions
+## Initial setup
+```
+$ cp .env.example .env
+$ cd docker
+$ docker-compose --env-file ../.env build
+```
 
-* ...
+## Running the Rails app
+```
+$ docker-compose --env-file ../.env up
+```
+## Running the Rails console
+When the app is already running with `docker-compose` up, attach to the container:
+```
+$ docker-compose exec app bin/rails c
+```
+When no container running yet, start up a new one:
+```
+$ docker-compose run --rm app bin/rails c
+```
+## Running tests
+```
+$ docker-compose run --rm app bin/rspec
+```
+
+## Postman script
+```
+There is a postman script that contains the whole scenario.
+you can find it in postman folder.
+```
+
+## Author
+
+**Mohamed Nabil**
+
+- <https://www.linkedin.com/in/mohamed-nabil-a184125b>
+- <https://leetcode.com/mohamednabil00000/>
