@@ -143,12 +143,4 @@ describe Api::V1::UsersController, type: :controller do
       end
     end
   end
-
-  # TO-DO
-  describe '#destroy' do
-  end
-
-  # TO-DO
-  describe '#index' do
-  end
 end

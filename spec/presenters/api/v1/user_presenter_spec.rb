@@ -19,8 +19,4 @@ describe Api::V1::UserPresenter do
       expect(described_class.new.present(user: nil)).to eq nil
     end
   end
-
-  # TO-DO
-  describe '#present_arr' do
-  end
 end
