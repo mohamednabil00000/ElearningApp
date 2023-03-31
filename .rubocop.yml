@@ -7,8 +7,4 @@ Metrics/BlockLength:
     - 'spec/**/**/**/*.rb'
 
 Style/Documentation:
-  Exclude:
-    - 'config/application.rb'
-
-Style/Documentation:
   Enabled: false
