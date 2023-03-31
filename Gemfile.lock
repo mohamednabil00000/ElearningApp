@@ -58,6 +58,7 @@ GEM
       zeitwerk (~> 2.2, >= 2.2.2)
     addressable (2.8.1)
       public_suffix (>= 2.0.2, < 6.0)
+    bcrypt (3.1.17)
     bindex (0.8.1)
     bootsnap (1.16.0)
       msgpack (~> 1.2)
@@ -115,6 +116,8 @@ GEM
     mini_portile2 (2.8.1)
     minitest (5.18.0)
     msgpack (1.7.0)
+    net-http (0.3.2)
+      uri
     net-imap (0.3.4)
       date
       net-protocol
@@ -224,6 +227,7 @@ GEM
     turbolinks-source (5.2.0)
     tzinfo (1.2.11)
       thread_safe (~> 0.1)
+    uri (0.12.1)
     web-console (4.2.0)
       actionview (>= 6.0.0)
       activemodel (>= 6.0.0)
@@ -248,6 +252,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  bcrypt (~> 3.1.7)
   bootsnap (>= 1.4.2)
   byebug
   capybara (>= 2.15)
@@ -256,6 +261,7 @@ DEPENDENCIES
   faker
   jbuilder (~> 2.7)
   listen (~> 3.2)
+  net-http
   pg (>= 0.18, < 2.0)
   puma (~> 4.1)
   rails (~> 6.0.6, >= 6.0.6.1)
