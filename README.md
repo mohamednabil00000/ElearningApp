@@ -5,7 +5,7 @@ It is a sample e-learning application for creating learning paths and courses.
 ## Features
 
 * Rails 6
-* Ruby 2.5
+* Ruby 2.6.5
 * Dockerfile and Docker Compose configuration
 * Heroku configration using foreman
 * PostgreSQL database

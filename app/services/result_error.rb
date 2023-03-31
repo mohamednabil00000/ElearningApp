@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# It is a general error response json format
 class ResultError
   attr_reader :status
 

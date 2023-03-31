@@ -130,7 +130,7 @@ describe Api::V1::UsersController, type: :controller do
         put :update,
             params: { user: { email: 'test@gmail.com', password: '12345678', password_confirmation: '12345',
                               username: 'test' }, id: user.id }
-        expect(response.status).to eq 422   
+        expect(response.status).to eq 422
         expect(JSON.parse(response.body)['errors']).to contain_exactly "Password confirmation doesn't match Password"
       end
 
@@ -142,13 +142,5 @@ describe Api::V1::UsersController, type: :controller do
         expect(JSON.parse(response.body)['errors']).to contain_exactly 'Email invalid format'
       end
     end
-  end
-
-  # TO-DO
-  describe '#destroy' do
-  end
-
-  # TO-DO
-  describe '#index' do
   end
 end

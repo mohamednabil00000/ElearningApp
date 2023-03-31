@@ -6,7 +6,8 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby '2.6.5'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails', branch: 'main'
-gem 'rails', '~> 6.0.6', '>= 6.0.6.1'
+gem 'bundler'
+gem 'rails', '~> 6.1', '>= 6.1.7.3'
 # Use postgresql as the database for Active Record
 gem 'pg', '>= 0.18', '< 2.0'
 # Use Puma as the app server
@@ -24,6 +25,14 @@ gem 'jbuilder', '~> 2.7'
 # Use Active Model has_secure_password
 gem 'bcrypt', '~> 3.1.7'
 gem 'net-http'
+
+# bundler-audit provides patch-level verification for Bundled apps.
+gem 'bundler-audit'
+
+# Brakeman detects security vulnerabilities in Ruby on Rails applications via static analysis.
+gem 'brakeman', '~> 3.3', '>= 3.3.2'
+# It is a Ruby code style checking and code formatting tool. It aims to enforce the community-driven Ruby Style Guide.
+gem 'rubocop', '~> 1.48', '>= 1.48.1'
 
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'
