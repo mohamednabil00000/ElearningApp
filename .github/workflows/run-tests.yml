@@ -40,7 +40,7 @@ jobs:
       - name: Run tests
         run: bin/rake
 
-  security-checks:
+  security-checks-and-lint:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -50,6 +50,9 @@ jobs:
         with:
           ruby-version: '2.6.5' # Not needed with a .ruby-version file
           bundler-cache: true # runs 'bundle install' and caches installed gems automaticall
-      - name: Ruby security checks
-        run: |
-          bundle exec bundler-audit --update
+      - name: Security audit dependencies
+        run: bin/bundler-audit --update
+      - name: Security audit application code
+        run: bin/brakeman -q -w2
+      - name: Lint Ruby files
+        run: bin/rubocop --parallel
