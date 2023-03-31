@@ -51,7 +51,7 @@ jobs:
           ruby-version: '2.6.5' # Not needed with a .ruby-version file
           bundler-cache: true # runs 'bundle install' and caches installed gems automaticall
       - name: Security audit dependencies
-        run: bin/bundler-audit --update
+        run: bundle exec bundler-audit --update
       - name: Security audit application code
         run: bin/brakeman -q -w2
       - name: Lint Ruby files
