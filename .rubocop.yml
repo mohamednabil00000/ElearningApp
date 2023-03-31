@@ -1,3 +1,14 @@
+AllCops:
+  Exclude:
+    - 'bin/bundle'
+
 Metrics/BlockLength:
   Exclude:
     - 'spec/**/**/**/*.rb'
+
+Style/Documentation:
+  Exclude:
+    - 'config/application.rb'
+
+Style/Documentation:
+  Enabled: false

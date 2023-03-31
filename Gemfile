@@ -31,7 +31,7 @@ gem 'bundler-audit'
 
 # Brakeman detects security vulnerabilities in Ruby on Rails applications via static analysis.
 gem 'brakeman', '~> 3.3', '>= 3.3.2'
-# RuboCop is a Ruby code style checking and code formatting tool. It aims to enforce the community-driven Ruby Style Guide.
+# It is a Ruby code style checking and code formatting tool. It aims to enforce the community-driven Ruby Style Guide.
 gem 'rubocop', '~> 1.48', '>= 1.48.1'
 
 # Use Active Storage variant
