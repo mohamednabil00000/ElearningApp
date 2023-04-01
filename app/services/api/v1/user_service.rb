@@ -13,9 +13,14 @@ module Api
       end
 
       def update(user:, user_params:)
+        unless user
+          return ResultError.new(errors: [I18n.t('errors.messages.not_found', parameter_name: :User)],
+                                 status: :not_found)
+        end
+
         return ResultSuccess.new if user.update(user_params)
 
-        ResultError.new(errors: user.errors.full_messages)
+        ResultError.new(errors: user.errors.full_messages, status: :unprocessable_entity)
       end
 
       def show(user:)

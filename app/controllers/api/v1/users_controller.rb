@@ -26,7 +26,7 @@ module Api
         if result.successful?
           head :no_content
         else
-          render json: result.attributes, status: :unprocessable_entity
+          render json: result.attributes, status: result.attributes[:status]
         end
       end
 

@@ -109,6 +109,18 @@ RSpec.describe Api::V1::UserService do
         expect(result.attributes[:errors]).to contain_exactly("Password confirmation doesn't match Password")
       end
 
+      it 'when user does not exist' do
+        params = {
+          email: 'test@gmail.com',
+          password: '12345678',
+          password_confirmation: '12345678',
+          username: 'test'
+        }
+        result = subject.update(user: nil, user_params: params)
+        expect(result).not_to be_successful
+        expect(result.attributes[:errors]).to contain_exactly('User not found!')
+      end
+
       it 'when update email with invalid format' do
         params = {
           email: 'em@.'

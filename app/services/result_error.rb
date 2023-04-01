@@ -1,10 +1,9 @@
 # frozen_string_literal: true
 
-# It is a general error response json format
 class ResultError
   attr_reader :status
 
-  def initialize(errors = {}, status = :error)
+  def initialize(errors = {}, status = :bad_request)
     @errors = errors
     @status = status
   end
