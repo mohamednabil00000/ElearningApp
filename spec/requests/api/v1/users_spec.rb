@@ -131,7 +131,7 @@ describe Api::V1::UsersController, type: :request do
             params: { user: { email: 'test@gmail.com', password: '12345678',
                               username: 'test' } }
         expect(response.status).to eq 404
-        expect(JSON.parse(response.body)['errors']).to contain_exactly 'User not found!'  
+        expect(JSON.parse(response.body)['errors']).to contain_exactly 'User not found!'
       end
 
       it 'when the password does not match the confirmation password' do

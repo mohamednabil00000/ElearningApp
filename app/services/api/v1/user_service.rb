@@ -13,7 +13,10 @@ module Api
       end
 
       def update(user:, user_params:)
-		return ResultError.new(errors: [ I18n.t('errors.messages.not_found', parameter_name: :User) ], status: :not_found) unless user
+        unless user
+          return ResultError.new(errors: [I18n.t('errors.messages.not_found', parameter_name: :User)],
+                                 status: :not_found)
+        end
 
         return ResultSuccess.new if user.update(user_params)
 

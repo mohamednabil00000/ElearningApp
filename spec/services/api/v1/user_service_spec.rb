@@ -118,7 +118,7 @@ RSpec.describe Api::V1::UserService do
         }
         result = subject.update(user: nil, user_params: params)
         expect(result).not_to be_successful
-        expect(result.attributes[:errors]).to contain_exactly('User not found!')        
+        expect(result.attributes[:errors]).to contain_exactly('User not found!')
       end
 
       it 'when update email with invalid format' do
