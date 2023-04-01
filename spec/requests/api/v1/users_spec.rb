@@ -2,12 +2,12 @@
 
 require 'rails_helper'
 
-describe Api::V1::UsersController, type: :controller do
+describe Api::V1::UsersController, type: :request do
   describe '#create' do
     context 'return success' do
       it 'when user created successfully' do
         expect do
-          post :create,
+          post '/api/v1/users',
                params: { user: { email: 'test@gmail.com', password: '12345678', password_confirmation: '12345678',
                                  username: 'test' } }
         end.to change(User, :count).by(1)
@@ -26,7 +26,7 @@ describe Api::V1::UsersController, type: :controller do
       it 'when the user exists before' do
         user = create :user, email: 'test@test.com'
         expect do
-          post :create,
+          post '/api/v1/users',
                params: { user: { email: user.email, password: '12345678', password_confirmation: '12345678',
                                  username: 'test' } }
         end.not_to change(User, :count)
@@ -36,7 +36,7 @@ describe Api::V1::UsersController, type: :controller do
 
       it 'when the password confirmation does not exist' do
         expect do
-          post :create, params: { user: { email: 'test@test.com', password: '12345678', username: 'test' } }
+          post '/api/v1/users', params: { user: { email: 'test@test.com', password: '12345678', username: 'test' } }
         end.not_to change(User, :count)
         expect(response.status).to eq 422
         expect(JSON.parse(response.body)['errors']).to contain_exactly "Password confirmation can't be blank"
@@ -44,7 +44,7 @@ describe Api::V1::UsersController, type: :controller do
 
       it 'when the password confirmation does not match' do
         expect do
-          post :create,
+          post '/api/v1/users',
                params: { user: { email: 'test@test.com', password: '12345678', username: 'test',
                                  password_confirmation: '123456789' } }
         end.not_to change(User, :count)
@@ -59,7 +59,7 @@ describe Api::V1::UsersController, type: :controller do
 
     context 'return success' do
       it 'return user json object' do
-        get :show, params: { id: user.id }
+        get "/api/v1/users/#{user.id}"
         expect(response.status).to eq 200
         expected_response = {
           'email' => user.email,
@@ -72,7 +72,7 @@ describe Api::V1::UsersController, type: :controller do
 
     context 'return failure' do
       it 'expect 404 when the user does not exist' do
-        get :show, params: { id: user.id + 1 }
+        get "/api/v1/users/#{user.id + 1}"
         expect(response.status).to eq 404
       end
     end
@@ -84,9 +84,9 @@ describe Api::V1::UsersController, type: :controller do
     context 'return success' do
       it 'when doing full update' do
         expect do
-          put :update,
+          put "/api/v1/users/#{user.id}",
               params: { user: { email: 'test@gmail.com', password: '12345678', password_confirmation: '12345678',
-                                username: 'test' }, id: user.id }
+                                username: 'test' } }
         end.not_to change(User, :count)
         expect(response.status).to eq 204
         updated_user = User.find_by(id: user.id)
@@ -96,8 +96,8 @@ describe Api::V1::UsersController, type: :controller do
 
       it 'when doing partial update' do
         expect do
-          patch :update,
-                params: { user: { email: 'test2@gmail.com', username: 'test2' }, id: user.id }
+          patch "/api/v1/users/#{user.id}",
+                params: { user: { email: 'test2@gmail.com', username: 'test2' } }
         end.not_to change(User, :count)
         expect(response.status).to eq 204
         updated_user = User.find_by(id: user.id)
@@ -107,8 +107,8 @@ describe Api::V1::UsersController, type: :controller do
 
       it 'when doing update for single attribure' do
         expect do
-          patch :update,
-                params: { user: { email: 'test3@gmail.com' }, id: user.id }
+          patch "/api/v1/users/#{user.id}",
+                params: { user: { email: 'test3@gmail.com' } }
         end.not_to change(User, :count)
         expect(response.status).to eq 204
         updated_user = User.find_by(id: user.id)
@@ -119,25 +119,33 @@ describe Api::V1::UsersController, type: :controller do
 
     context 'return failure' do
       it 'when the password exist without confirmation password' do
-        put :update,
+        put "/api/v1/users/#{user.id}",
             params: { user: { email: 'test@gmail.com', password: '12345678',
-                              username: 'test' }, id: user.id }
+                              username: 'test' } }
         expect(response.status).to eq 422
         expect(JSON.parse(response.body)['errors']).to contain_exactly "Password confirmation can't be blank"
       end
 
+      it 'when user does not exist' do
+        put "/api/v1/users/#{user.id + 1}",
+            params: { user: { email: 'test@gmail.com', password: '12345678',
+                              username: 'test' } }
+        expect(response.status).to eq 404
+        expect(JSON.parse(response.body)['errors']).to contain_exactly 'User not found!'  
+      end
+
       it 'when the password does not match the confirmation password' do
-        put :update,
+        put "/api/v1/users/#{user.id}",
             params: { user: { email: 'test@gmail.com', password: '12345678', password_confirmation: '12345',
-                              username: 'test' }, id: user.id }
+                              username: 'test' } }
         expect(response.status).to eq 422
         expect(JSON.parse(response.body)['errors']).to contain_exactly "Password confirmation doesn't match Password"
       end
 
       it 'when the email is invalid format' do
-        put :update,
+        put "/api/v1/users/#{user.id}",
             params: { user: { email: 'test@gmail.c', password: '12345678', password_confirmation: '12345678',
-                              username: 'test' }, id: user.id }
+                              username: 'test' } }
         expect(response.status).to eq 422
         expect(JSON.parse(response.body)['errors']).to contain_exactly 'Email invalid format'
       end
