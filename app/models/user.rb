@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-# user model
 class User < ApplicationRecord
   require 'securerandom'
 

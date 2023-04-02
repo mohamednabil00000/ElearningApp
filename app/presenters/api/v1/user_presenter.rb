@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-# user presenter
 module Api
   module V1
     class UserPresenter
@@ -14,7 +13,7 @@ module Api
         }
       end
 
-      def present_arr(users:)
+      def present_all(users:)
         users.map do |user|
           present(user: user)
         end
