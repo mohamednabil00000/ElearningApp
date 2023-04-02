@@ -32,4 +32,7 @@
 en:
   errors:
     messages:
-      not_found: '%{parameter_name} not found!'
+      not_found: '%{parameter_name} is not found!'
+      missed_parameter: '%{parameter_name} parameter is missed!'
+      alternate_author_should_not_be_original_author: 'Alternate author should be different than the original author!'
+      this_user_is_author_for_some_courses: 'This user is an author for some courses so you should provide alternate author. please send tranfer_to parameter!'

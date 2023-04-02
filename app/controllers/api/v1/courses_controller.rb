@@ -3,7 +3,7 @@
 module Api
   module V1
     class CoursesController < Api::V1::BaseController
-      before_action :set_course, only: %i[show destroy update]
+      before_action :validate_course, only: %i[show destroy update]
 
       # GET /api/v1/courses
       def index
@@ -16,9 +16,9 @@ module Api
       # GET /api/v1/courses/{id}
       def show
         result = course_service.show(course: @course)
-        return head :not_found unless result.successful?
+        return render json: result.attributes[:course], status: :ok if result.successful?
 
-        render json: result.attributes[:course], status: :ok
+        render json: result.attributes, status: result.status
       end
 
       # PUT /api/v1/courses/{id}
@@ -27,7 +27,7 @@ module Api
         if result.successful?
           head :no_content
         else
-          render json: result.attributes, status: result.attributes[:status]
+          render json: result.attributes, status: result.status
         end
       end
 
@@ -47,7 +47,7 @@ module Api
         if result.successful?
           head :no_content
         else
-          render json: result.attributes, status: result.attributes[:status]
+          render json: result.attributes, status: result.status
         end
       end
 
@@ -55,10 +55,6 @@ module Api
 
       def course_params
         params.fetch(:course, {}).permit(:name, :path, :author_id)
-      end
-
-      def set_course
-        @course = Course.find_by(id: params[:id])
       end
 
       def course_service

@@ -99,6 +99,7 @@ describe Api::V1::CoursesController, type: :request do
       it 'expect 404 when the user does not exist' do
         get "/api/v1/courses/#{course.id + 1}"
         expect(response.status).to eq 404
+        expect(JSON.parse(response.body)['errors']).to contain_exactly 'Course is not found!'
       end
     end
   end
@@ -158,7 +159,7 @@ describe Api::V1::CoursesController, type: :request do
       it 'when course does not exist' do
         patch "/api/v1/courses/#{course.id + 1}", params: { course: { name: 'course2' } }
         expect(response.status).to eq 404
-        expect(JSON.parse(response.body)['errors']).to contain_exactly 'Course not found!'
+        expect(JSON.parse(response.body)['errors']).to contain_exactly 'Course is not found!'
       end
 
       it 'when the updated author does not exist' do
@@ -183,7 +184,7 @@ describe Api::V1::CoursesController, type: :request do
       it 'when the course does not exist' do
         delete "/api/v1/courses/#{course.id + 1}"
         expect(response.status).to eq 404
-        expect(JSON.parse(response.body)['errors']).to contain_exactly 'Course not found!'
+        expect(JSON.parse(response.body)['errors']).to contain_exactly 'Course is not found!'
       end
     end
   end

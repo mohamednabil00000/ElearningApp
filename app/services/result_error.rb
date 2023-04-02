@@ -3,13 +3,13 @@
 class ResultError
   attr_reader :status
 
-  def initialize(errors = {}, status = :bad_request)
+  def initialize(errors: [], status: :bad_request)
     @errors = errors
     @status = status
   end
 
   def attributes
-    errors
+    { errors: errors }
   end
 
   def successful?

@@ -109,18 +109,6 @@ RSpec.describe Api::V1::UserService do
         expect(result.attributes[:errors]).to contain_exactly("Password confirmation doesn't match Password")
       end
 
-      it 'when user does not exist' do
-        params = {
-          email: 'test@gmail.com',
-          password: '12345678',
-          password_confirmation: '12345678',
-          username: 'test'
-        }
-        result = subject.update(user: nil, user_params: params)
-        expect(result).not_to be_successful
-        expect(result.attributes[:errors]).to contain_exactly('User not found!')
-      end
-
       it 'when update email with invalid format' do
         params = {
           email: 'em@.'
@@ -157,11 +145,47 @@ RSpec.describe Api::V1::UserService do
         expect(result.attributes[:user]).to eq expected_res
       end
     end
+  end
 
-    context 'return failure' do
-      it 'when user is nil' do
-        result = subject.show(user: nil)
-        expect(result).not_to be_successful
+  describe '#destroy' do
+    context 'when the user is an author' do
+      let!(:author) { create(:user) }
+      let!(:course) { create(:course, author: author) }
+
+      context 'return success' do
+        let!(:author2) { create(:user) }
+
+        it 'author deleted successfuly' do
+          expect do
+            params = { transfer_to: author2.id }
+            result = subject.destroy(user: author, params: params)
+            expect(result).to be_successful
+            course.reload
+            expect(course.author_id).to eq author2.id
+          end.to change(User, :count).by(-1)
+        end
+      end
+      context 'return failure' do
+        it 'when transfer to parameter is missed' do
+          expect do
+            result = subject.destroy(user: author, params: {})
+            expect(result).not_to be_successful
+            expect(result.attributes[:errors])
+              .to contain_exactly(I18n.t('errors.messages.this_user_is_author_for_some_courses'))
+          end.not_to change(User, :count)
+        end
+      end
+    end
+
+    context 'when the user is not an author' do
+      context 'return success' do
+        let!(:user) { create(:user) }
+        it 'author deleted successfuly' do
+          expect do
+            result = subject.destroy(user: user, params: {})
+            expect(result).to be_successful
+          end.to change(User, :count).by(-1)
+        end
       end
     end
   end

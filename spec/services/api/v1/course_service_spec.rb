@@ -133,13 +133,6 @@ RSpec.describe Api::V1::CourseService do
         expect(result.attributes[:errors]).to contain_exactly('Name has already been taken')
       end
 
-      it 'when course does not exist' do
-        params = { name: 'course2' }
-        result = subject.update(course: nil, course_params: params)
-        expect(result).not_to be_successful
-        expect(result.attributes[:errors]).to contain_exactly 'Course not found!'
-      end
-
       it 'when the updated author does not exist' do
         params = { author_id: 123_456 }
         result = subject.update(course: course, course_params: params)
@@ -169,13 +162,6 @@ RSpec.describe Api::V1::CourseService do
         expect(result.attributes[:course]).to eq expected_response
       end
     end
-
-    context 'return failure' do
-      it 'expect 404 when the user does not exist' do
-        result = subject.show(course: nil)
-        expect(result).not_to be_successful
-      end
-    end
   end
 
   describe '#destroy' do
@@ -186,14 +172,6 @@ RSpec.describe Api::V1::CourseService do
         result = subject.destroy(course: course)
 
         expect(result).to be_successful
-      end
-    end
-
-    context 'return failure' do
-      it 'when the course does not exist' do
-        result = subject.destroy(course: nil)
-        expect(result).not_to be_successful
-        expect(result.attributes[:errors]).to contain_exactly 'Course not found!'
       end
     end
   end

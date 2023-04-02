@@ -18,28 +18,16 @@ module Api
       end
 
       def update(course:, course_params:)
-        unless course
-          return ResultError.new(errors: [I18n.t('errors.messages.not_found', parameter_name: :Course)],
-                                 status: :not_found)
-        end
-
         return ResultSuccess.new if course.update(course_params)
 
         ResultError.new(errors: course.errors.full_messages, status: :unprocessable_entity)
       end
 
       def show(course:)
-        return ResultError.new unless course
-
         ResultSuccess.new(course: course_presenter.present(course: course))
       end
 
       def destroy(course:)
-        unless course
-          return ResultError.new(errors: [I18n.t('errors.messages.not_found', parameter_name: :Course)],
-                                 status: :not_found)
-        end
-
         return ResultSuccess.new if course.destroy
 
         ResultError.new(errors: course.errors.full_messages, status: :unprocessable_entity)
