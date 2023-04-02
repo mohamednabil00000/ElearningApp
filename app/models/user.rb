@@ -6,6 +6,8 @@ class User < ApplicationRecord
 
   has_secure_password
 
+  has_many :courses, foreign_key: :author_id
+
   validates :password, length: { minimum: 8, maximum: 16, too_short: 'should be more than 7 chars',
                                  too_long: 'should be less than 17 chars' }, if: :password_required?
   validates :email, presence: true, uniqueness: true

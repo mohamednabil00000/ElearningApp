@@ -20,4 +20,8 @@ RSpec.describe User, type: :model do
                                                   .with_message('should be less than 17 chars')
     }
   end
+
+  describe 'associations' do
+    it { is_expected.to have_many(:courses).with_foreign_key(:author_id) }
+  end
 end
