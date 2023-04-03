@@ -7,6 +7,11 @@ Rails.application.routes.draw do
     namespace :v1 do
       resources :users, only: %i[create update index show destroy]
       resources :courses, only: %i[create update index show destroy]
+      resources :talent_courses, only: %i[index update]
+      scope 'talents/:talent_id/courses/:course_id' do
+        post '/', to: 'talent_courses#create'
+        delete '/', to: 'talent_courses#destroy'
+      end
     end
   end
 end

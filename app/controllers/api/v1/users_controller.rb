@@ -3,7 +3,7 @@
 module Api
   module V1
     class UsersController < Api::V1::BaseController
-      before_action :validate_user, only: %i[show destroy update]
+      before_action -> { validate_user(params[:id]) }, only: %i[show destroy update]
       before_action :validate_transfer_to, only: %i[destroy]
 
       # GET /api/v1/users
