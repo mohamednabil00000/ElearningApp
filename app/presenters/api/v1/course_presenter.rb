@@ -10,7 +10,7 @@ module Api
           id: course.id,
           path: course.path,
           name: course.name,
-          author: Api::V1::UserPresenter.new.present(user: course.author)
+          author: user_presenter.present(user: course.author)
         }
       end
 
@@ -18,6 +18,12 @@ module Api
         courses.map do |course|
           present(course: course)
         end
+      end
+
+      private
+
+      def user_presenter
+        @user_presenter ||= Api::V1::UserPresenter.new
       end
     end
   end

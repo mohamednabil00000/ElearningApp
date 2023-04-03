@@ -3,18 +3,32 @@
 module Api
   module V1
     class BaseController < Api::BaseController
-      def validate_user
-        @user = User.find_by(id: params[:id])
+      def validate_user(user_id)
+        @user = User.find_by(id: user_id)
         return if @user
 
         render json: { errors: [I18n.t('errors.messages.not_found', parameter_name: :User)] }, status: :not_found
       end
 
-      def validate_course
-        @course = Course.find_by(id: params[:id])
+      def validate_course(course_id)
+        @course = Course.find_by(id: course_id)
         return if @course
 
         render json: { errors: [I18n.t('errors.messages.not_found', parameter_name: :Course)] }, status: :not_found
+      end
+
+      def validate_talent_not_author
+        return unless @user.id == @course.author_id
+
+        render json: { errors: [I18n.t('errors.messages.talent_should_not_be_the_author')] }, status: :bad_request
+      end
+
+      def validate_talent_course
+        @talent_course = TalentCourse.find_by(id: params[:id])
+        return if @talent_course
+
+        render json: { errors: [I18n.t('errors.messages.not_found', parameter_name: :Talent_course)] },
+               status: :not_found
       end
     end
   end

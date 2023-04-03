@@ -12,7 +12,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20_230_401_125_229) do
+ActiveRecord::Schema.define(version: 20_230_403_120_423) do
   # These are extensions that must be enabled in order to support this database
   enable_extension 'plpgsql'
 
@@ -25,6 +25,17 @@ ActiveRecord::Schema.define(version: 20_230_401_125_229) do
     t.index ['author_id'], name: 'index_courses_on_author_id'
   end
 
+  create_table 'talent_courses', force: :cascade do |t|
+    t.bigint 'talent_id', null: false
+    t.bigint 'course_id', null: false
+    t.string 'status', default: 'Not_started_yet'
+    t.datetime 'finished_at'
+    t.datetime 'created_at', precision: 6, null: false
+    t.datetime 'updated_at', precision: 6, null: false
+    t.index ['course_id'], name: 'index_talent_courses_on_course_id'
+    t.index ['talent_id'], name: 'index_talent_courses_on_talent_id'
+  end
+
   create_table 'users', force: :cascade do |t|
     t.string 'username'
     t.string 'email'
@@ -34,4 +45,6 @@ ActiveRecord::Schema.define(version: 20_230_401_125_229) do
   end
 
   add_foreign_key 'courses', 'users', column: 'author_id'
+  add_foreign_key 'talent_courses', 'courses'
+  add_foreign_key 'talent_courses', 'users', column: 'talent_id'
 end

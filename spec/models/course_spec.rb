@@ -5,6 +5,8 @@ require 'rails_helper'
 RSpec.describe Course, type: :model do
   describe 'associations' do
     it { is_expected.to belong_to(:author).class_name(:User) }
+    it { is_expected.to have_many(:talents).through(:talent_courses).class_name(:User) }
+    it { is_expected.to have_many(:talent_courses).dependent(:delete_all) }
   end
 
   describe 'validations' do

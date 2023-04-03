@@ -3,7 +3,7 @@
 module Api
   module V1
     class CoursesController < Api::V1::BaseController
-      before_action :validate_course, only: %i[show destroy update]
+      before_action -> { validate_course(params[:id]) }, only: %i[show destroy update]
 
       # GET /api/v1/courses
       def index
