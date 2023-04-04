@@ -13,7 +13,7 @@ module Api
         render json: result.attributes[:courses], status: :ok
       end
 
-      # GET /api/v1/courses/{id}
+      # GET /api/v1/courses/:id
       def show
         result = course_service.show(course: @course)
         return render json: result.attributes[:course], status: :ok if result.successful?
@@ -21,7 +21,7 @@ module Api
         render json: result.attributes, status: result.status
       end
 
-      # PUT /api/v1/courses/{id}
+      # PUT /api/v1/courses/:id
       def update
         result = course_service.update(course: @course, course_params: course_params)
         if result.successful?
@@ -41,7 +41,7 @@ module Api
         end
       end
 
-      # DELETE /api/v1/courses/{id}
+      # DELETE /api/v1/courses/:id
       def destroy
         result = course_service.destroy(course: @course)
         if result.successful?

@@ -17,6 +17,14 @@ module Api
         render json: { errors: [I18n.t('errors.messages.not_found', parameter_name: :Course)] }, status: :not_found
       end
 
+      def validate_learning_path(learning_path_id)
+        @learning_path = LearningPath.find_by(id: learning_path_id)
+        return if @learning_path
+
+        render json: { errors: [I18n.t('errors.messages.not_found', parameter_name: :Learning_path)] },
+               status: :not_found
+      end
+
       def validate_talent_not_author
         return unless @user.id == @course.author_id
 

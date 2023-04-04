@@ -12,7 +12,7 @@ module Api
         render json: result.attributes[:users], status: :ok
       end
 
-      # GET /api/v1/users/{id}
+      # GET /api/v1/users/:id
       def show
         result = user_service.show(user: @user)
         return render json: result.attributes[:user], status: :ok if result.successful?
@@ -20,7 +20,7 @@ module Api
         render json: result.attributes, status: result.status
       end
 
-      # PUT /api/v1/users/{id}
+      # PUT /api/v1/users/:id
       def update
         result = user_service.update(user: @user, user_params: user_params)
         if result.successful?
@@ -40,7 +40,7 @@ module Api
         end
       end
 
-      # DELETE /api/v1/users/{id}
+      # DELETE /api/v1/users/:id
       def destroy
         result = user_service.destroy(user: @user, params: transfer_to_params)
         if result.successful?

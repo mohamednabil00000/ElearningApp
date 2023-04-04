@@ -23,6 +23,7 @@ RSpec.describe User, type: :model do
 
   describe 'associations' do
     it { is_expected.to have_many(:courses).with_foreign_key(:author_id) }
+    it { is_expected.to have_many(:learning_paths).with_foreign_key(:author_id) }
     it { is_expected.to have_many(:courses).through(:talent_courses).with_foreign_key(:talent_id) }
     it { is_expected.to have_many(:talent_courses).dependent(:delete_all) }
   end
