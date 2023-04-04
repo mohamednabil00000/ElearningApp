@@ -12,7 +12,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20_230_403_120_423) do
+ActiveRecord::Schema.define(version: 20_230_404_130_643) do
   # These are extensions that must be enabled in order to support this database
   enable_extension 'plpgsql'
 
@@ -23,6 +23,23 @@ ActiveRecord::Schema.define(version: 20_230_403_120_423) do
     t.datetime 'created_at', precision: 6, null: false
     t.datetime 'updated_at', precision: 6, null: false
     t.index ['author_id'], name: 'index_courses_on_author_id'
+  end
+
+  create_table 'learning_path_courses', force: :cascade do |t|
+    t.bigint 'learning_path_id', null: false
+    t.bigint 'course_id', null: false
+    t.datetime 'created_at', precision: 6, null: false
+    t.datetime 'updated_at', precision: 6, null: false
+    t.index ['course_id'], name: 'index_learning_path_courses_on_course_id'
+    t.index ['learning_path_id'], name: 'index_learning_path_courses_on_learning_path_id'
+  end
+
+  create_table 'learning_paths', force: :cascade do |t|
+    t.string 'name', null: false
+    t.bigint 'author_id', null: false
+    t.datetime 'created_at', precision: 6, null: false
+    t.datetime 'updated_at', precision: 6, null: false
+    t.index ['author_id'], name: 'index_learning_paths_on_author_id'
   end
 
   create_table 'talent_courses', force: :cascade do |t|
@@ -45,6 +62,9 @@ ActiveRecord::Schema.define(version: 20_230_403_120_423) do
   end
 
   add_foreign_key 'courses', 'users', column: 'author_id'
+  add_foreign_key 'learning_path_courses', 'courses'
+  add_foreign_key 'learning_path_courses', 'learning_paths'
+  add_foreign_key 'learning_paths', 'users', column: 'author_id'
   add_foreign_key 'talent_courses', 'courses'
   add_foreign_key 'talent_courses', 'users', column: 'talent_id'
 end

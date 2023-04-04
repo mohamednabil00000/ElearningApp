@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
+require 'rails_helper'
 
 describe Api::V1::CoursePresenter do
   let!(:author) { create :user }

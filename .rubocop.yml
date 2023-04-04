@@ -10,6 +10,8 @@ Metrics/BlockLength:
     - 'spec/**/**/**/*.rb'
     - 'db/schema.rb'
 
+Metrics/MethodLength:
+  Max: 15
 Style/Documentation:
   Enabled: false
 Gemspec/DeprecatedAttributeAssignment: # new in 1.30

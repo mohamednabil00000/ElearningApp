@@ -6,6 +6,7 @@ class User < ApplicationRecord
   has_secure_password
 
   has_many :courses, foreign_key: :author_id
+  has_many :learning_paths, foreign_key: :author_id
   has_many :talent_courses, dependent: :delete_all, foreign_key: :talent_id
   has_many :courses, through: :talent_courses
 
