@@ -17,7 +17,8 @@ It is a sample e-learning application for creating learning paths and courses.
 
 ## Assumptions
 
-* If the user assigned to a learning path and he was taken the next available course before, so I will skip it and go to the next available one that he doesn't take it before. (Discuss during the interview)
+* If a talent is assigned to a learning path, so I am going to search to the first available course bec. may the talent took the first course before. and same concept when the talent completed the current course
+so I assign to him the next available one by the same way.
 * We can't delete a course which is already in-progress with any user in any learning path. (Discuss during the interview)
 
 ## Requirements
@@ -70,4 +71,5 @@ you can find it in postman folder.
 **Mohamed Nabil**
 
 - <https://www.linkedin.com/in/mohamed-nabil-a184125b>
+- <https://github.com/mohamednabil00000>
 - <https://leetcode.com/mohamednabil00000/>
