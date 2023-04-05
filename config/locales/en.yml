@@ -30,4 +30,13 @@
 # available at https://guides.rubyonrails.org/i18n.html.
 
 en:
-  hello: "Hello world"
+  errors:
+    messages:
+      not_found: '%{parameter_name} is not found!'
+      missed_parameter: '%{parameter_name} parameter is missed!'
+      alternate_author_should_not_be_original_author: 'Alternate author should be different than the original author!'
+      this_user_is_author_for_some_courses: 'This user is an author for some courses so you should provide alternate author. please send tranfer_to parameter!'
+      course_already_taken_by_this_user: 'This course is already taken by this user!'
+      talent_should_not_be_the_author: 'The talent should not be the author of the course!'
+      Learning_path_should_at_least_contain_one_course: 'Learning path should at least contain one course!'
+      user_already_assigned_to_this_learning_path: 'already assigned to this learning path!'

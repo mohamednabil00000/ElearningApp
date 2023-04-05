@@ -20,4 +20,13 @@ RSpec.describe User, type: :model do
                                                   .with_message('should be less than 17 chars')
     }
   end
+
+  describe 'associations' do
+    it { is_expected.to have_many(:courses).with_foreign_key(:author_id) }
+    it { is_expected.to have_many(:learning_paths).with_foreign_key(:author_id) }
+    it { is_expected.to have_many(:courses).through(:talent_courses) }
+    it { is_expected.to have_many(:talent_courses).dependent(:delete_all).with_foreign_key(:talent_id) }
+    it { is_expected.to have_many(:learning_paths).through(:talent_learning_paths) }
+    it { is_expected.to have_many(:talent_learning_paths).dependent(:delete_all).with_foreign_key(:talent_id) }
+  end
 end

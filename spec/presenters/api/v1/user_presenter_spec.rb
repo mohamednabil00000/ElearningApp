@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
+require 'rails_helper'
 
 describe Api::V1::UserPresenter do
   let(:user) { create :user }
@@ -18,9 +18,5 @@ describe Api::V1::UserPresenter do
     it 'return nil when user is nil' do
       expect(described_class.new.present(user: nil)).to eq nil
     end
-  end
-
-  # TO-DO
-  describe '#present_arr' do
   end
 end
