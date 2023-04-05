@@ -338,6 +338,18 @@ RSpec.describe Api::V1::LearningPathService do
                               "Couldn't find Course with id 12345."
       end
 
+      it 'when we update the courses to be empty' do
+        params =  {
+          name: 'learning_path2', author_id: author2.id, course_ids: []
+        }
+        result = subject.update(learning_path: learning_path, learning_path_params: params)
+
+        expect(result).not_to be_successful
+        expect(result.status).to eq :unprocessable_entity
+        expect(result.attributes[:errors])
+          .to contain_exactly 'Learning path should at least contain one course!'
+      end
+
       it 'when we update the author by adding non-exist author' do
         params = {
           name: 'learning_path2', author_id: 12_345

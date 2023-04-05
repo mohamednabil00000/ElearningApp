@@ -26,8 +26,12 @@ module Api
 
       # Delete /api/v1/talents/:talent_id/courses/:course_id
       def destroy
-        talent_course_service.destroy(course_id: params[:course_id], talent_id: params[:talent_id])
-        head :no_content
+        result = talent_course_service.destroy(course_id: params[:course_id], talent_id: params[:talent_id])
+        if result.successful?
+          head :no_content
+        else
+          render json: result.attributes, status: :unprocessable_entity
+        end
       end
 
       # Patch /api/v1/talent_courses/:id

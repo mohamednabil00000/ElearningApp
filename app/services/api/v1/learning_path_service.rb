@@ -42,6 +42,11 @@ module Api
         ResultSuccess.new(learning_paths: learning_path_presenter.present_all(learning_paths: learning_paths))
       end
 
+      def destroy_empty_learning_paths
+        LearningPath.left_outer_joins(:learning_path_courses)
+                    .where('learning_path_courses.learning_path_id': nil).delete_all
+      end
+
       private
 
       def learning_path_presenter

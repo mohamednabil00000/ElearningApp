@@ -18,7 +18,7 @@ module Api
       end
 
       def validate_learning_path(learning_path_id)
-        @learning_path = LearningPath.find_by(id: learning_path_id)
+        @learning_path = LearningPath.includes(:courses).find_by(id: learning_path_id)
         return if @learning_path
 
         render json: { errors: [I18n.t('errors.messages.not_found', parameter_name: :Learning_path)] },
@@ -36,6 +36,14 @@ module Api
         return if @talent_course
 
         render json: { errors: [I18n.t('errors.messages.not_found', parameter_name: :Talent_course)] },
+               status: :not_found
+      end
+
+      def validate_talent_learning_path(talent_learning_path_id)
+        @talent_learning_path = TalentLearningPath.find_by(id: talent_learning_path_id)
+        return if @talent_learning_path
+
+        render json: { errors: [I18n.t('errors.messages.not_found', parameter_name: :Talent_learning_path)] },
                status: :not_found
       end
     end

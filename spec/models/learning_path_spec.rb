@@ -7,6 +7,8 @@ RSpec.describe LearningPath, type: :model do
     it { is_expected.to belong_to(:author).class_name(:User) }
     it { is_expected.to have_many(:courses).through(:learning_path_courses) }
     it { is_expected.to have_many(:learning_path_courses).dependent(:delete_all) }
+    it { is_expected.to have_many(:talents).through(:talent_learning_paths).class_name(:User) }
+    it { is_expected.to have_many(:talent_learning_paths).dependent(:delete_all) }
   end
 
   describe 'validations' do

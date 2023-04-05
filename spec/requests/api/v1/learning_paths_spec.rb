@@ -311,6 +311,16 @@ describe Api::V1::LearningPathsController, type: :request do
                               "Couldn't find Course with id 12345."
       end
 
+      it 'when we update the courses to be empty' do
+        put "/api/v1/learning_paths/#{learning_path.id}", params: { learning_path: {
+          name: 'learning_path2', author_id: author2.id, course_ids: []
+        } }
+
+        expect(response.status).to eq 422
+        expect(JSON.parse(response.body)['errors'])
+          .to contain_exactly 'Learning path should at least contain one course!'
+      end
+
       it 'when we update the author by adding non-exist author' do
         put "/api/v1/learning_paths/#{learning_path.id}", params: { learning_path: {
           name: 'learning_path2', author_id: 12_345

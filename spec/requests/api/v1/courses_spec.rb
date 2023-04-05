@@ -178,6 +178,14 @@ describe Api::V1::CoursesController, type: :request do
 
         expect(response.status).to eq 204
       end
+
+      it 'should delete all learning path that has the course that we are going to delete it' do
+        learning_path = create :learning_path, name: 'learning_path1', author_id: author.id, course_ids: [course.id]
+        delete "/api/v1/courses/#{course.id}"
+
+        expect(response.status).to eq 204
+        expect(LearningPath.find_by(id: learning_path.id)).to eq nil
+      end
     end
 
     context 'return failure' do

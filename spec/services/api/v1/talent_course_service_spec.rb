@@ -121,6 +121,9 @@ RSpec.describe Api::V1::TalentCourseService do
   describe '#update' do
     context 'return success' do
       let!(:talent_course) { create :talent_course, talent_id: talent.id, course_id: course.id }
+      let(:course2) { create :course, author: author }
+      let!(:talent_course2) { create :talent_course, talent_id: talent.id, course_id: course2.id }
+      let(:learning_path) { create :learning_path, course_ids: [course.id, course2.id], author_id: author.id }
 
       it 'when the status updated successfully to in progress' do
         result = described_class.new.update(talent_course: talent_course, params: { status: 'In_progress' })
@@ -130,12 +133,25 @@ RSpec.describe Api::V1::TalentCourseService do
         expect(talent_course.finished_at).to eq nil
       end
 
-      it 'when the status updated successfully to completed' do
+      it 'when the status updated successfully to completed and talent learning path shift to the next' do
+        talent_learning_path = create :talent_learning_path, talent_id: talent.id, learning_path_id: learning_path.id,
+                                                             current_talent_course_id: talent_course.id
+
         result = described_class.new.update(talent_course: talent_course, params: { status: 'Completed' })
         expect(result).to be_successful
         talent_course.reload
         expect(talent_course.status).to eq 'Completed'
         expect(talent_course.finished_at).not_to eq nil
+        talent_learning_path.reload
+        expect(talent_learning_path.current_talent_course_id).to eq talent_course2.id
+      end
+
+      it 'when the params is empty' do
+        result = described_class.new.update(talent_course: talent_course, params: {})
+        expect(result).to be_successful
+        talent_course.reload
+        expect(talent_course.status).to eq 'Not_started_yet'
+        expect(talent_course.finished_at).to eq nil
       end
     end
 
