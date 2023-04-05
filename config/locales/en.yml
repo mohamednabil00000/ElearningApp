@@ -39,3 +39,4 @@ en:
       course_already_taken_by_this_user: 'This course is already taken by this user!'
       talent_should_not_be_the_author: 'The talent should not be the author of the course!'
       Learning_path_should_at_least_contain_one_course: 'Learning path should at least contain one course!'
+      user_already_assigned_to_this_learning_path: 'already assigned to this learning path!'

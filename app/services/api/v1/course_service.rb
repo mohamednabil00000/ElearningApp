@@ -28,15 +28,25 @@ module Api
       end
 
       def destroy(course:)
-        return ResultSuccess.new if course.destroy
+        if course.destroy
+          # TODO: This one should be in background job
+          learning_path_service.destroy_empty_learning_paths
+          return ResultSuccess.new
+        end
 
         ResultError.new(errors: course.errors.full_messages, status: :unprocessable_entity)
+      rescue ActiveRecord::InvalidForeignKey => e
+        ResultError.new(errors: [e.message], status: :unprocessable_entity)
       end
 
       private
 
       def course_presenter
         @course_presenter ||= Api::V1::CoursePresenter.new
+      end
+
+      def learning_path_service
+        @learning_path_service ||= Api::V1::LearningPathService.new
       end
     end
   end

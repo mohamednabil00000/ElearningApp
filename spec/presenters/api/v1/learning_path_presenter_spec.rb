@@ -5,8 +5,8 @@ require 'rails_helper'
 describe Api::V1::LearningPathPresenter do
   let!(:author) { create(:user) }
   let!(:author2) { create(:user) }
-  let!(:course1) { create(:course, author_id: author.id) }
-  let!(:course2) { create(:course, author_id: author.id) }
+  let!(:course1) { create(:course, author_id: author.id, name: 'course1') }
+  let!(:course2) { create(:course, author_id: author.id, name: 'course2') }
 
   describe '#present' do
     it 'return expected learning path object' do

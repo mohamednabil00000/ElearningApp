@@ -7,7 +7,6 @@ It is a sample e-learning application for creating learning paths and courses.
 * Rails 6
 * Ruby 2.6.5
 * Dockerfile and Docker Compose configuration
-* Heroku configration using foreman
 * PostgreSQL database
 * Rspec & Factorybot
 * GitHub Actions for
@@ -15,8 +14,11 @@ It is a sample e-learning application for creating learning paths and courses.
   * security checks
   * Rubocop for linting(upcoming)
 * I18n
-* Swagger(upcoming)
 
+## Assumptions
+
+* If the user assigned to a learning path and he was taken the next available course before, so I will skip it and go to the next available one that he doesn't take it before. (Discuss during the interview)
+* We can't delete a course which is already in-progress with any user in any learning path. (Discuss during the interview)
 
 ## Requirements
 

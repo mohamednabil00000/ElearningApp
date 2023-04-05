@@ -12,7 +12,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20_230_404_130_643) do
+ActiveRecord::Schema.define(version: 20_230_405_132_300) do
   # These are extensions that must be enabled in order to support this database
   enable_extension 'plpgsql'
 
@@ -53,6 +53,17 @@ ActiveRecord::Schema.define(version: 20_230_404_130_643) do
     t.index ['talent_id'], name: 'index_talent_courses_on_talent_id'
   end
 
+  create_table 'talent_learning_paths', force: :cascade do |t|
+    t.bigint 'learning_path_id', null: false
+    t.bigint 'talent_id', null: false
+    t.bigint 'current_talent_course_id', null: false
+    t.datetime 'created_at', precision: 6, null: false
+    t.datetime 'updated_at', precision: 6, null: false
+    t.index ['current_talent_course_id'], name: 'index_talent_learning_paths_on_current_talent_course_id'
+    t.index ['learning_path_id'], name: 'index_talent_learning_paths_on_learning_path_id'
+    t.index ['talent_id'], name: 'index_talent_learning_paths_on_talent_id'
+  end
+
   create_table 'users', force: :cascade do |t|
     t.string 'username'
     t.string 'email'
@@ -67,4 +78,7 @@ ActiveRecord::Schema.define(version: 20_230_404_130_643) do
   add_foreign_key 'learning_paths', 'users', column: 'author_id'
   add_foreign_key 'talent_courses', 'courses'
   add_foreign_key 'talent_courses', 'users', column: 'talent_id'
+  add_foreign_key 'talent_learning_paths', 'learning_paths'
+  add_foreign_key 'talent_learning_paths', 'talent_courses', column: 'current_talent_course_id'
+  add_foreign_key 'talent_learning_paths', 'users', column: 'talent_id'
 end

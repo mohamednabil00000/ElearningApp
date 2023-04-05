@@ -49,7 +49,7 @@ describe Api::V1::TalentCoursesController, type: :request do
 
   describe '#index' do
     context 'return success' do
-      let(:course2) { create(:course, author_id: author.id) }
+      let(:course2) { create(:course, author_id: author.id, name: 'course2') }
 
       it 'get all assigned courses successfully' do
         talent_course1 = create :talent_course, talent_id: talent.id, course_id: course.id
@@ -122,7 +122,6 @@ describe Api::V1::TalentCoursesController, type: :request do
       end
 
       it 'when the talent and course does not exist' do
-        create :talent_course, talent_id: talent.id, course_id: course.id
         expect do
           delete '/api/v1/talents/123345/courses/123456'
           expect(response.status).to eq 204
@@ -134,7 +133,9 @@ describe Api::V1::TalentCoursesController, type: :request do
   describe '#update' do
     context 'return success' do
       let!(:talent_course) { create :talent_course, talent_id: talent.id, course_id: course.id }
-
+      let(:course2) { create :course, author: author }
+      let!(:talent_course2) { create :talent_course, talent_id: talent.id, course_id: course2.id }
+      let(:learning_path) { create :learning_path, course_ids: [course.id, course2.id], author_id: author.id }
       it 'when the status updated successfully to in progress' do
         patch "/api/v1/talent_courses/#{talent_course.id}", params: { status: 'In_progress' }
         expect(response.status).to eq 204
@@ -143,12 +144,25 @@ describe Api::V1::TalentCoursesController, type: :request do
         expect(talent_course.finished_at).to eq nil
       end
 
-      it 'when the status updated successfully to completed' do
+      it 'when the status updated successfully to completed and talent learning path shift to the next' do
+        talent_learning_path = create :talent_learning_path, talent_id: talent.id, learning_path_id: learning_path.id,
+                                                             current_talent_course_id: talent_course.id
+
         patch "/api/v1/talent_courses/#{talent_course.id}", params: { status: 'Completed' }
         expect(response.status).to eq 204
         talent_course.reload
         expect(talent_course.status).to eq 'Completed'
         expect(talent_course.finished_at).not_to eq nil
+        talent_learning_path.reload
+        expect(talent_learning_path.current_talent_course_id).to eq talent_course2.id
+      end
+
+      it 'when the params is empty' do
+        patch "/api/v1/talent_courses/#{talent_course.id}"
+        expect(response.status).to eq 204
+        talent_course.reload
+        expect(talent_course.status).to eq 'Not_started_yet'
+        expect(talent_course.finished_at).to eq nil
       end
     end
 

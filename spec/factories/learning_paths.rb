@@ -2,6 +2,6 @@
 
 FactoryBot.define do
   factory :learning_path do
-    name { Faker::ProgrammingLanguage.name }
+    name { Faker::Internet.username }
   end
 end

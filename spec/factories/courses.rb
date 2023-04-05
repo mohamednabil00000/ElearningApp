@@ -2,7 +2,7 @@
 
 FactoryBot.define do
   factory :course do
-    name { Faker::ProgrammingLanguage.name }
+    name { Faker::Internet.username }
     path { '/path1' }
   end
 end
