@@ -7,6 +7,13 @@
 # Ignore cred files
 .env
 
+
+.browserslistrc
+
+
+# Ignore osx folder metadata files
+.DS_Store
+
 # Ignore bundler config.
 /.bundle
 
