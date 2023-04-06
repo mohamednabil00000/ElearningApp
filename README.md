@@ -12,13 +12,13 @@ It is a sample e-learning application for creating learning paths and courses.
 * GitHub Actions for
   * tests
   * security checks
-  * Rubocop for linting(upcoming)
+  * Rubocop for linting
 * I18n
 
 ## Assumptions
 
-* If a talent is assigned to a learning path, so I am going to search to the first available course bec. may the talent took the first course before. and same concept when the talent completed the current course
-so I assign to him the next available one by the same way.
+* If a talent is assigned to a learning path, I will search for the first available course because the talent may have taken the first course before. And the same concept when the talent completes the current course,
+I will assign to him the next available one by the same way.
 * We can't delete a course which is already in-progress with any user in any learning path. (Discuss during the interview)
 
 ## Requirements
