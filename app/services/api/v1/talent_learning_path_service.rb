@@ -66,7 +66,6 @@ module Api
             skip_until = nil if course.id == skip_until
             next
           end
-          # we can use find_by_or_create
           talent_course = TalentCourse.find_or_create_by(course_id: course.id, talent_id: talent_id)
 
           if talent_course.status != 'Completed'
